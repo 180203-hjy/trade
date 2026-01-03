@@ -34,6 +34,16 @@
         body {
             overscroll-behavior: none;
         }
+        /* 添加一个 tooltip 动画 */
+        .tooltip-enter {
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .group:hover .tooltip-enter {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="bg-gray-100 h-screen overflow-hidden">
@@ -123,17 +133,17 @@
 
         const Selectable = ({ id, text, onSelect, isSelected, label, isUsed }) => {
           
-          let className = "relative inline-block cursor-pointer mx-1 px-1 rounded transition-all duration-200 border-b-2 align-bottom ";
+          let className = "relative inline-block cursor-pointer mx-1 px-1 rounded transition-all duration-200 align-bottom ";
           
           if (isSelected) {
-            // 当前选中（最高优先级）
-            className += "bg-blue-600 text-white border-blue-800 scale-105 shadow-md z-10";
+            // 当前选中（最高优先级）: 蓝色高亮，放大
+            className += "bg-blue-600 text-white border border-blue-800 scale-105 shadow-md z-10";
           } else if (isUsed) {
-            // 用过的（灰色+删除线）
-            className += "bg-gray-100 text-gray-400 border-gray-200 line-through decoration-gray-400";
+            // 用过的: 灰色+删除线，背景透明
+            className += "bg-transparent text-gray-400 border-b border-gray-200 line-through decoration-gray-400";
           } else {
-            // 默认状态
-            className += "bg-yellow-50 text-blue-900 border-blue-200 hover:bg-yellow-200 hover:border-blue-500";
+            // 默认状态: 修改为无背景，仅下划线，避免满屏黄色
+            className += "bg-transparent text-gray-800 border-b border-gray-400 border-dashed hover:bg-yellow-50 hover:border-blue-500 hover:text-blue-700";
           }
 
           return (
@@ -145,7 +155,7 @@
               className={className}
               title={isUsed ? "已使用" : "点击选中"}
             >
-              <span className={`text-[9px] font-bold mr-1 opacity-60 select-none px-0.5 rounded ${isSelected ? 'bg-white/50 text-black' : 'text-black'}`}>
+              <span className={`text-[9px] font-bold mr-1 opacity-70 select-none px-0.5 rounded ${isSelected ? 'bg-white/50 text-black' : 'text-gray-500 bg-gray-100'}`}>
                 {label}
               </span>
               {text}
@@ -204,7 +214,7 @@
               PORT OF DISCHARGE 44F: <Sel id="inv_pod" label="⑩" text="LOS ANGELES" /><br/>
               LATEST DATE OF SHIPMENT 44C: 20220131<br/>
               SHIPMENT OF GOODS 45A:<br/>
-              <Sel id="inv_goods_desc" label="⑪" text="DYED MEN''S SHIRTS COTTON 80 PCT POLYESTER 20 PCT" /> OTIIKK DETAILS AS PER<br/>
+              <Sel id="inv_goods_desc" label="⑪" text="DYED MEN'S SHIRTS COTTON 80 PCT POLYESTER 20 PCT" /> OTIIKK DETAILS AS PER<br/>
               S/C NO. <Sel id="inv_sc_no" label="⑫" text="11JW1106" /><br/>
               PACKING: ONE PC IN A POLYBAG AND 12 PCS INTO AN EXPORT CARTON. TOTAL INTO ONE 20' FULL CONTAINER CIF LOS ANGELES<br/>
               DOCUMENTS REQUIRED 46A:<br/>
@@ -429,7 +439,7 @@
           }
 
           return (
-            <div className="relative flex flex-col h-full w-full">
+            <div className="relative flex flex-col h-full w-full group">
               {label && <span className="text-[10px] text-gray-500 font-bold select-none mb-0.5 block">{label}</span>}
               <div className="relative flex-grow">
                 {isTextArea ? (
@@ -454,7 +464,7 @@
                 )}
               </div>
               {isWrong && (
-                <div className="absolute top-full left-0 bg-red-100 text-red-700 text-[10px] p-1 border border-red-300 rounded shadow-lg z-20 w-full break-words">
+                <div className="tooltip-enter hidden group-hover:block absolute top-full left-0 mt-1 bg-red-100 text-red-700 text-[10px] p-2 border border-red-300 rounded shadow-lg z-50 w-full break-words min-w-[100px]">
                   <strong>正确:</strong> {correctValue || '(空)'}
                 </div>
               )}
