@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>+1教你填单证</title>
+    <title>+1教你填单证 (终极完美修正版)</title>
     
     <!-- 引入 React 和 ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -44,6 +44,10 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* 单证专用字体模拟 */
+        .font-typewriter {
+            font-family: "Courier New", Courier, monospace;
+        }
     </style>
 </head>
 <body class="bg-gray-100 h-screen overflow-hidden">
@@ -56,8 +60,28 @@
         // 1. 正确答案配置 (Answer Key)
         // ==========================================
         const CORRECT_ANSWERS = {
-          // --- 商业发票 ---
-          invoice: {
+          // --- 商业发票 Practice 1 (Goodlucky) ---
+          invoice1: {
+            issuer: "FUXIN FOREIGN TRADE CORP. OF ZHEJIANG, LTD. 288 WEST SECOND RING ROAD, ZHUJI, ZHEJIANG, CHINA",
+            to: "GOODLUCKY CO., LTD., 96 HIGHWAYS LUTON, BEDFORDSHIRE LU1 1XL, UNITED KINGDOM",
+            invNo: "ZFA0723-Q",
+            date: "JULY 23, 202x",
+            scNo: "ZF18E0620",
+            lcNo: "DCLUT200954",
+            transport: "FROM CHINA TO FELIXSTOWE",
+            tradeTerms: "CIF FELIXSTOWE",
+            payment: "", 
+            marks: "GOODLUCKY\nMEN'S SOCKS\nC/NO. 599/202X\nFELIXSTOWE\nNO.1-400\n\nGOODLUCKY\nBABIES' HOSIERY\nC/NO. 599/202X\nFELIXSTOWE\nNO.401-600",
+            desc: "MEN'S SOCKS AND BABIES' HOSIERY AS PER S/C NO. ZF18E0620 AND APPLICANTS ORDER NO. 599/202X",
+            qty: "4 800 DOZ\n2 000 DOZ",
+            price: "GBP 12.00/DOZ\nGBP 9.00/DOZ",
+            amount: "GBP 57,600.00\nGBP 18,000.00",
+            total: "GBP 75,600.00",
+            sayTotal: "SAY POUNDS STERLING SEVENTY-FIVE THOUSAND SIX HUNDRED ONLY",
+            signature: "FUXIN FOREIGN TRADE CORP. OF ZHEJIANG, LTD."
+          },
+          // --- 商业发票 Practice 2 (Power Play) ---
+          invoice2: {
             issuer: "ZHEJIANG JIAXING WENSANG GARMENT CO., LTD. NO.120 SOUTH FURUN ROAD, NANHU DISTRICT, JIAXING, CHINA",
             to: "POWER PLAY INC. 2ND FLOOR, NO.137E 33RD STREET, LOS ANGELES, CA.90011, U. S. A.",
             invNo: "ABC220116",
@@ -65,14 +89,16 @@
             scNo: "11JW1106",
             lcNo: "T-117641",
             transport: "FROM SHANGHAI TO LOS ANGELES BY SEA",
+            tradeTerms: "CIF LOS ANGELES",
             payment: "AT 30 DAYS AFTER SIGHT",
             marks: "POWER PLAY\n11JW1106\nLOS ANGELES\nNO.1-220",
-            desc: "DYED MEN'S SHIRTS COTTON 80 PCT POLYESTER 20 PCT",
+            desc: "DYED MEN'S SHIRTS COTTON 80 PCT POLYESTER 20 PCT\nONE PC IN A POLYBAG AND 12 PCS IN AN EXPORT CARTON. TOTAL INTO ONE 20' FULL CONTAINER CIF LOS ANGELES",
             qty: "10 000 PCS",
             price: "USD 7.80/PC",
             amount: "USD 78,000.00",
             total: "USD 78,000.00",
-            sayTotal: "SAY US DOLLARS SEVENTY-EIGHT THOUSAND ONLY"
+            sayTotal: "SAY US DOLLARS SEVENTY-EIGHT THOUSAND ONLY",
+            signature: "LIANG DONG"
           },
           // --- 海运提单 ---
           bl: {
@@ -80,41 +106,52 @@
             consignee: "TO ORDER OF METITA BANK LTD.",
             notify: "FFK CORP. AKEKSANTERINK AUTO P. O. BOX 9, FINLAND",
             blNo: "KTT1245678",
-            vessel: "DONGFANG / MAKIS V. 002",
+            preCarriage: "DONG FANG",
+            vessel: "MAKIS V. 002",
+            transshipment: "HONG KONG", // 补全：转运港
             voy: "", 
             pol: "GUANGZHOU, CHINA",
             pod: "HELSINKI, FINLAND",
-            final: "",
+            final: "HELSINKI, FINLAND", // 补全：最终目的地
+            containerNo: "SIHUSSSASYDQCD\n123456 CY/CY",
             marks: "ABC\nHELSINKI\nNO. 1-800",
             pkgs: "800 CARTONS",
             desc: "9,600 PCS OF WOMEN'S SWEATERS",
             weight: "6,500 KGS",
             meas: "25 CBMS",
+            sayPkgs: "EIGHT HUNDRED CARTONS ONLY",
             freight: "FREIGHT PREPAID",
             placeDate: "GUANGZHOU, CHINA JULY 10, 202x",
+            onBoardDate: "JULY 10, 202x", 
+            originals: "THREE",
             signed: "XYZ SHIPPING CO. AS AGENT FOR THE CARRIER: ABC SHIPPING CO."
           },
           // --- 保险单 ---
           insurance: {
             invNo: "AG(29)88012",
-            polNo: "", 
+            polNo: "NP47/12", 
             insured: "CHINA TOP TOY CORP. 724 DONGFENG RD., GUANGZHOU, CHINA",
             marks: "WOODLAND\nNEW YORK\nNo. P01009",
             qty: "100 CTNS",
             desc: "1000 PCS OF STUFFED TOYS DETAILS AS PER ORDER NO.P01009",
             amount: "USD 3,850.00",
             total: "SAY US DOLLARS THREE THOUSAND EIGHT HUNDRED AND FIFTY ONLY",
+            premium: "AS ARRANGED",
+            rate: "AS ARRANGED",
             vessel: "S. S. YUETONG-542",
             slg: "15/12/2024",
             from: "GUANGZHOU PORT, CHINA",
             to: "NEW YORK, USA",
-            conditions: "ALL RISKS AND WAR RISKS AS PER OCEAN MARINE CARGO CLAUSES OF THE PICC DATED 01/01/1981",
+            // 修正：增加 "COVERING"
+            conditions: "COVERING ALL RISKS AND WAR RISKS AS PER OCEAN MARINE CARGO CLAUSES OF THE PICC DATED 01/01/1981",
+            agent: "THE PEOPLE'S INSURANCE CO. OF CHINA GUANGZHOU BRANCH",
             payable: "NEW YORK, U.S",
-            date: "Dec.12,2024" 
+            date: "Dec.12,2024",
+            signature: "THE PEOPLE'S INSURANCE CO. OF CHINA"
           },
-          // --- 汇票 ---
-          draft: {
-            no: "3356719",
+          // --- 汇票 1 ---
+          draft1: {
+            no: "335673", 
             place: "NINGBO, CHINA APRIL 20TH, 2020",
             amountNum: "USD 9,300.00",
             tenor: "30 DAYS AFTER",
@@ -123,35 +160,42 @@
             bank: "BANK OF CHINA, SINGAPORE",
             lc: "136A-523",
             lcDate: "APRIL 5TH, 2020",
-            drawee: "BANK OF CHINA, SINGAPORE"
+            drawee: "BANK OF CHINA, SINGAPORE",
+            interest: "---",
+            drawer: "ZHEJIANG TEXTILE IMPORT AND EXPORT CORPORATION"
+          },
+          // --- 汇票 2 ---
+          draft2: {
+            no: "HZ66517",
+            place: "HANGZHOU, CHINA OCT. 16, 2024",
+            amountNum: "USD 66,500.00",
+            tenor: "AT SIGHT",
+            payee: "BANK OF CHINA, ZHEJIANG BRANCH",
+            amountWords: "SAY US DOLLARS SIXTY-SIX THOUSAND FIVE HUNDRED ONLY",
+            bank: "THE BANK OF TOKYO, LTD., NAGOYA OFFICE",
+            lc: "123A-456",
+            lcDate: "OCT. 6, 2024",
+            drawee: "THE BANK OF TOKYO, LTD., NEWYORK AGENCY, NEW YORK, N.Y.",
+            interest: "---",
+            drawer: "ZHEJIANG KINGTEX TRADING CO., LTD."
           }
         };
 
         // ==========================================
         // 2. 通用组件
         // ==========================================
-
         const Selectable = ({ id, text, onSelect, isSelected, label, isUsed }) => {
-          
           let className = "relative inline-block cursor-pointer mx-1 px-1 rounded transition-all duration-200 align-bottom ";
-          
           if (isSelected) {
-            // 当前选中（最高优先级）: 蓝色高亮，放大
             className += "bg-blue-600 text-white border border-blue-800 scale-105 shadow-md z-10";
           } else if (isUsed) {
-            // 用过的: 灰色+删除线，背景透明
             className += "bg-transparent text-gray-400 border-b border-gray-200 line-through decoration-gray-400";
           } else {
-            // 默认状态: 修改为无背景，仅下划线，避免满屏黄色
             className += "bg-transparent text-gray-800 border-b border-gray-400 border-dashed hover:bg-yellow-50 hover:border-blue-500 hover:text-blue-700";
           }
-
           return (
             <span
-              onClick={(e) => {
-                e.stopPropagation();
-                onSelect(text, id);
-              }}
+              onClick={(e) => { e.stopPropagation(); onSelect(text, id); }}
               className={className}
               title={isUsed ? "已使用" : "点击选中"}
             >
@@ -173,251 +217,215 @@
         // 3. 左侧资料源
         // ==========================================
 
-        const SourceInvoice = ({ currentSelection, onSelect, usedItems }) => {
-          // 辅助函数：简化 Selectable 调用，自动注入 isSelected 和 isUsed
-          const Sel = (props) => (
-            <Selectable 
-              {...props} 
-              onSelect={onSelect} 
-              isSelected={currentSelection?.text === props.text} 
-              isUsed={usedItems.has(props.id)}
-            />
-          );
+        const SourceInvoice = ({ currentSelection, onSelect, usedItems, practiceMode }) => {
+          const Sel = (props) => <Selectable {...props} onSelect={onSelect} isSelected={currentSelection?.text === props.text} isUsed={usedItems.has(props.id)} />;
           
-          return (
-            <TextBlock>
-              <div className="bg-blue-50 p-3 text-xs text-blue-800 mb-4 rounded border border-blue-200 shadow-sm">
-                <strong>Practice 2</strong><br/>
-                根据下列信用证以及其他相关资料缮制商业发票。
-              </div>
-
-              TO: <Sel id="inv_to_bank" label="①" text="BANK OF CHINA, JIAXING BRANCH" /><br/>
-              FM: <Sel id="inv_fm_bank" label="②" text="UNION BANK OF CALIFORNIA N. A., LOS ANGELES" /><br/>
-              MT: 700<br/>
-              SEQUENCE OF TOTAL 27: 1/1<br/>
-              FORM OF DOC. L/C 40A: IRREVOCABLE DOCUMENTARY L/C<br/>
-              DOC. L/C NUMBER 20: <Sel id="inv_lc_no" label="③" text="T-117641" /><br/>
-              DATE OF ISSUE 31C: <Sel id="inv_issue_date" label="④" text="20211201" /><br/>
-              EXPIRY 31D: DATE 20220215  PLACE IN THE PEOPLE REP. OF CHINA<br/>
-              APPLICANT 50:<br/>
-              <Sel id="inv_applicant" label="⑤" text="POWER PLAY INC. 2ND FLOOR, NO.137E 33RD STREET, LOS ANGELES, CA.90011, U. S. A." /><br/>
-              BENEFICIARY 59:<br/>
-              <Sel id="inv_beneficiary" label="⑥" text="ZHEJIANG JIAXING WENSANG GARMENT CO., LTD. NO.120 SOUTH FURUN ROAD, NANHU DISTRICT, JIAXING, CHINA" /><br/>
-              AMOUNT 32B: CURRENCY USD AMOUNT <Sel id="inv_lc_amount" label="⑦" text="39,600.00" /><br/>
-              POS/NEG TOL (%): 39A: 5/5<br/>
-              AVAILABLE WITH/BY 41D: ANY BANK IN CHINA BY NEGOTIATION<br/>
-              DRAFTS AT 42C: <Sel id="inv_payment" label="⑧" text="AT 30 DAYS AFTER SIGHT" /> FOR FULL INVOICE VALUE<br/>
-              DRAWEE 42D: UNION BANK OF CALIFORNIA N. A. ALL OFFICE IN U. S. A.<br/>
-              PARTIAL SHIPMENTS 43P: NOT ALLOWED<br/>
-              TRANSSHIPMENT 43T: NOT ALLOWED<br/>
-              PORT OF LOADING 44K: <Sel id="inv_pol" label="⑨" text="SHANGHAI" /><br/>
-              PORT OF DISCHARGE 44F: <Sel id="inv_pod" label="⑩" text="LOS ANGELES" /><br/>
-              LATEST DATE OF SHIPMENT 44C: 20220131<br/>
-              SHIPMENT OF GOODS 45A:<br/>
-              <Sel id="inv_goods_desc" label="⑪" text="DYED MEN'S SHIRTS COTTON 80 PCT POLYESTER 20 PCT" /> OTIIKK DETAILS AS PER<br/>
-              S/C NO. <Sel id="inv_sc_no" label="⑫" text="11JW1106" /><br/>
-              PACKING: ONE PC IN A POLYBAG AND 12 PCS INTO AN EXPORT CARTON. TOTAL INTO ONE 20' FULL CONTAINER CIF LOS ANGELES<br/>
-              DOCUMENTS REQUIRED 46A:<br/>
-              + COMMERCIAL INVOICE IN QUADRUPLICATE SHOWING FREIGHT CHARGE AND PREMIUM SEPARATELY.<br/>
-              + FULL SET OF CLEAN ON BOARD BILLS OF LADING MADE OUT TO OUR ORDER MARKED "FREIGHT PREPAID". NOTIFY THE APPLICANT SHOWING FULL NAME AND ADDRESS.<br/>
-              + INSURANCE POLICY OR CERTIFICATE IN DUPLICATE ISSUED BY PEOPLE'S INSURANCE COMPANY OF CHINA INCORPORATING THEIR OCEAN MARINE CARGO CLAUSES FREE FROM PARTICULAR AVERAGE DATED JAN 1ST, 2010 FOR 110 PERCENT OF CIF INVOICE VALUE INDICATING THE PREMIUM PAID.<br/>
-              + DETAILED PACKING LIST IN TRIPLICATE.<br/>
-              + CERTIFICATE OF ORIGIN IN DUPLICATE.<br/>
-              ADDITIONAL COND. 47A:<br/>
-              1. THE NUMBER AND DATE OF THIS L/C AND THE NAME OF OUR BANK MUST BE QUOTED ON ALL DRAFTS REQUIRED.<br/>
-              2. AN ADDITIONAL FEE OF USD 100.00 WILL BE DEDUCTED FROM THE PROCEED AND PAID UNDER ANY DRAWING WHERE THE DOCUMENTS PRESENTED ARE FOUND NOT TO BE IN STRICTLY CONFORMITY WITH THE TERMS OF THIS L/C 3.5 PCT MORE OR LESS BOTH IN AMOUNT AND QUANTITY ARE ALLOWED.<br/>
-              DETAILS OF CHARGES 71B: ALL BANKING CHARGES OUTSIDE THE ISSUING BANK INCLUDING ADVISING COMMISSION ARE FOR ACCOUNT OF THE BENEFICIARY AND MUST BE CLAIMED AT THE TIME OF ADVISING.<br/>
-              PRESENTATION PERIOD 48: NO LATER THAN 15 DAYS AFTER THE DATE OF ISSUANCE OF THE SHIPPING DOCUMENTS BUT WITHIN THE VALIDITY OF THE L/C.<br/>
-              CONFIRMATION 49: WITHOUT.<br/>
-              INSTRUCTIONS 78: UPON OUR RECEIPT OF THE DOCUMENTS IN ORDER, WE WILL REMIT IN ACCORDANCE WITH THE NEGOTIATING BANK'S INSTRUCTIONS AT MATURITY.<br/>
-              其他相关资料：<br/>
-              数量：<Sel id="inv_qty" label="⑬" text="10 000 PCS" /><br/>
-              单价：<Sel id="inv_price" label="⑭" text="USD 7.80/PC" /><br/>
-              发票号码：<Sel id="inv_no" label="⑮" text="ABC220116" /><br/>
-              毛重：14千克/箱<br/>
-              海运费：1 500美元<br/>
-              实际出运时，货物没有增减，完全按照合同所述出口。<br/>
-              唛头：<br/>
-              <Sel id="inv_marks" label="⑯" text={`POWER PLAY\n11JW1106\nLOS ANGELES\nNO.1-220`} /><br/>
-              发票日期：<Sel id="inv_date" label="⑰" text="JAN. 16, 2022" /><br/>
-              发票签署：梁东<br/>
-              保险费：66美元<br/>
-              <br/>
-              <div className="bg-yellow-50 p-2 border border-yellow-200 text-gray-600 rounded">
-                <strong>[系统辅助生成数据 - 点击选用]</strong><br/>
-                总金额：<Sel id="inv_total" label="⑱" text="USD 78,000.00" /> (10000 * 7.8)<br/>
-                大写金额：<Sel id="inv_say" label="⑲" text="SAY US DOLLARS SEVENTY-EIGHT THOUSAND ONLY" /><br/>
-                运输条款：<Sel id="inv_transport" label="⑳" text="FROM SHANGHAI TO LOS ANGELES BY SEA" />
-              </div>
-            </TextBlock>
-          );
+          if (practiceMode === 'invoice1') {
+            return (
+              <TextBlock>
+                <div className="bg-blue-50 p-3 text-xs text-blue-800 mb-4 rounded border border-blue-200 shadow-sm">
+                  <strong>Practice 1 (Goodlucky)</strong><br/>
+                  来源：《图片整理.docx》Practice 1<br/>
+                </div>
+                APPLICANT:<br/>
+                <Sel id="inv1_app" label="①" text="GOODLUCKY CO., LTD., 96 HIGHWAYS LUTON, BEDFORDSHIRE LU1 1XL, UNITED KINGDOM" /><br/>
+                BENEFICIARY (Issuer):<br/>
+                <Sel id="inv1_ben" label="②" text="FUXIN FOREIGN TRADE CORP. OF ZHEJIANG, LTD. 288 WEST SECOND RING ROAD, ZHUJI, ZHEJIANG, CHINA" /><br/>
+                L/C NUMBER: <Sel id="inv1_lc" label="③" text="DCLUT200954" /><br/>
+                S/C NO: <Sel id="inv1_sc" label="④" text="ZF18E0620" /><br/>
+                TERMS: <Sel id="inv1_term" label="⑤" text="CIF FELIXSTOWE" /><br/>
+                INVOICE DATE: <Sel id="inv1_date" label="⑥" text="JULY 23, 202x" /><br/>
+                INVOICE NO: <Sel id="inv1_no" label="⑦" text="ZFA0723-Q" /><br/>
+                GOODS:<br/>
+                <Sel id="inv1_desc" label="⑧" text="MEN'S SOCKS AND BABIES' HOSIERY AS PER S/C NO. ZF18E0620 AND APPLICANTS ORDER NO. 599/202X" /><br/>
+                <br/>
+                <strong>Items:</strong><br/>
+                1. Short Socks: <Sel id="inv1_qty1" label="⑨" text="4 800 DOZ" /> @ <Sel id="inv1_price1" label="⑩" text="GBP 12.00/DOZ" /><br/>
+                Marks 1: <Sel id="inv1_marks1" label="⑪" text={`GOODLUCKY\nMEN'S SOCKS\nC/NO. 599/202X\nFELIXSTOWE\nNO.1-400`} /><br/>
+                2. Babies' Hosiery: <Sel id="inv1_qty2" label="⑫" text="2 000 DOZ" /> @ <Sel id="inv1_price2" label="⑬" text="GBP 9.00/DOZ" /><br/>
+                Marks 2: <Sel id="inv1_marks2" label="⑭" text={`GOODLUCKY\nBABIES' HOSIERY\nC/NO. 599/202X\nFELIXSTOWE\nNO.401-600`} /><br/>
+                <br/>
+                <div className="bg-yellow-50 p-2 border border-yellow-200 text-gray-600 rounded mt-2">
+                  <strong>[辅助填写]</strong><br/>
+                  Total Marks: <Sel id="inv1_marks_all" label="⑮" text={`GOODLUCKY\nMEN'S SOCKS\nC/NO. 599/202X\nFELIXSTOWE\nNO.1-400\n\nGOODLUCKY\nBABIES' HOSIERY\nC/NO. 599/202X\nFELIXSTOWE\nNO.401-600`} /><br/>
+                  Amt 1/2: <Sel id="inv1_amt1" label="⑯" text="GBP 57,600.00" /> / <Sel id="inv1_amt2" label="⑰" text="GBP 18,000.00" /><br/>
+                  Total: <Sel id="inv1_total" label="⑱" text="GBP 75,600.00" /><br/>
+                  Say Total: <Sel id="inv1_say" label="⑲" text="SAY POUNDS STERLING SEVENTY-FIVE THOUSAND SIX HUNDRED ONLY" /><br/>
+                  Transport: <Sel id="inv1_trans" label="⑳" text="FROM CHINA TO FELIXSTOWE" /><br/>
+                  Signed by: <Sel id="inv1_sign" label="㉑" text="FUXIN FOREIGN TRADE CORP. OF ZHEJIANG, LTD." />
+                </div>
+              </TextBlock>
+            );
+          } else {
+            return (
+              <TextBlock>
+                <div className="bg-blue-50 p-3 text-xs text-blue-800 mb-4 rounded border border-blue-200 shadow-sm">
+                  <strong>Practice 2 (Power Play)</strong><br/>
+                  来源：《图片整理.docx》Practice 2 / 《外贸单证自制 1.docx》
+                </div>
+                ISSUER: <Sel id="inv_beneficiary" label="①" text="ZHEJIANG JIAXING WENSANG GARMENT CO., LTD. NO.120 SOUTH FURUN ROAD, NANHU DISTRICT, JIAXING, CHINA" /><br/>
+                TO: <Sel id="inv_applicant" label="②" text="POWER PLAY INC. 2ND FLOOR, NO.137E 33RD STREET, LOS ANGELES, CA.90011, U. S. A." /><br/>
+                L/C NO: <Sel id="inv_lc_no" label="③" text="T-117641" /><br/>
+                S/C NO. <Sel id="inv_sc_no" label="④" text="11JW1106" /><br/>
+                TERM: <Sel id="inv_payment" label="⑤" text="AT 30 DAYS AFTER SIGHT" /><br/>
+                POL/POD: <Sel id="inv_pol" label="⑥" text="SHANGHAI" /> / <Sel id="inv_pod" label="⑦" text="LOS ANGELES" /><br/>
+                DESC: <Sel id="inv_goods_desc" label="⑧" text="DYED MEN'S SHIRTS COTTON 80 PCT POLYESTER 20 PCT" /><br/>
+                QTY: <Sel id="inv_qty" label="⑨" text="10 000 PCS" /><br/>
+                PRICE: <Sel id="inv_price" label="⑩" text="USD 7.80/PC" /><br/>
+                INV NO: <Sel id="inv_no" label="⑪" text="ABC220116" /><br/>
+                MARKS: <Sel id="inv_marks" label="⑫" text={`POWER PLAY\n11JW1106\nLOS ANGELES\nNO.1-220`} /><br/>
+                DATE: <Sel id="inv_date" label="⑬" text="JAN. 16, 2022" /><br/>
+                SIGNED BY: <Sel id="inv_sign" label="⑭" text="LIANG DONG" /><br/>
+                <br/>
+                <div className="bg-yellow-50 p-2 border border-yellow-200 text-gray-600 rounded mt-2">
+                  <strong>[辅助填写]</strong><br/>
+                  Trade Terms: <Sel id="inv_terms" label="⑮" text="CIF LOS ANGELES" /><br/>
+                  Total: <Sel id="inv_total" label="⑯" text="USD 78,000.00" /><br/>
+                  Say Total: <Sel id="inv_say" label="⑰" text="SAY US DOLLARS SEVENTY-EIGHT THOUSAND ONLY" /><br/>
+                  Transport: <Sel id="inv_transport" label="⑱" text="FROM SHANGHAI TO LOS ANGELES BY SEA" /><br/>
+                  <strong>[Missing Detail]</strong><br/>
+                  Pkg Desc: <Sel id="inv_desc_detail" label="⑲" text="ONE PC IN A POLYBAG AND 12 PCS IN AN EXPORT CARTON. TOTAL INTO ONE 20' FULL CONTAINER CIF LOS ANGELES" />
+                </div>
+              </TextBlock>
+            );
+          }
         };
 
         const SourceBL = ({ currentSelection, onSelect, usedItems }) => {
-          const Sel = (props) => (
-            <Selectable 
-              {...props} 
-              onSelect={onSelect} 
-              isSelected={currentSelection?.text === props.text} 
-              isUsed={usedItems.has(props.id)}
-            />
-          );
-
+          const Sel = (props) => <Selectable {...props} onSelect={onSelect} isSelected={currentSelection?.text === props.text} isUsed={usedItems.has(props.id)} />;
           return (
             <TextBlock>
               <div className="bg-blue-50 p-3 text-xs text-blue-800 mb-4 rounded border border-blue-200 shadow-sm">
-                <strong>Practice 1</strong><br/>
-                请根据下述信用证条款及其他资料，以货运代理人身份填制海运提单。
+                <strong>Practice 1 (Bill of Lading)</strong><br/>
+                参考《图片整理.docx》Practice 1
               </div>
-
-              （1）信用证条款：<br/>
-              ISSUING(BANK):METITA BANK LTD., FIN-00020 METITA, FINLAND<br/>
-              TERM OF DOC. L/C: IRREVOCABLE<br/>
               L/C NUMBER: <Sel id="bl_lc" label="①" text="KHL12-22457" /><br/>
-              DATE OF ISSUE: 202x0505<br/>
-              EXPIRY DATE AND PLACE: 202x0716, CHINA<br/>
-              APPLICANT: <Sel id="bl_notify" label="②" text="FFK CORP. AKEKSANTERINK AUTO P. O. BOX 9, FINLAND" /><br/>
-              BENEFICIARY: GUANGDONG RONGHUA TRADE CO., LTD.<br/>
-              168 DEZHENG ROAD SOUTH, GUANGZHOU, CHINA<br/>
-              AMOUNT: CURRENCY USD 38,400.00<br/>
-              POS./NEG. TOL.(%): 5/5<br/>
-              AVAILABLE WITH/BY: ANY BANK IN ADVISING COUNTRY BY NEGOTIATION<br/>
-              PARTIAL SHIPMENTS: NOT ALLOWED<br/>
-              TRANSSHIPMENT: ALLOWED<br/>
-              LOADING IN CHARGE: <Sel id="bl_pol" label="③" text="GUANGZHOU, CHINA" /><br/>
-              FOR TRANSPORT TO: <Sel id="bl_pod" label="④" text="HELSINKI, FINLAND" /><br/>
-              SHIPMENT PERIOD: AT THE LATEST JULY 16, 202x<br/>
-              DESCRIPTION OF GOODS: <Sel id="bl_desc" label="⑤" text="9,600 PCS OF WOMEN'S SWEATERS" /><br/>
-              UNIT PRICE: USD 4.00/PC, OTHER DETAILS AS PER S/C NO. 98GQ468001<br/>
-              PACKING: 12 PCS/CTN CFR HELSINKI (INCOTERMS 2020)<br/>
-              DOCUMENTS REQUIRED: FULL SET OF CLEAN ON BOARD MARINE BILLS OF LADING, MADE OUT TO ORDER OF THE ISSUING BANK, MARKED "FREIGHT PREPAID" AND DOC. COLLECT, SHOWING INSURANCE PREMIUM, SURCHARGE AND TRADE TERMS NOTIFY APPLICANT<br/>
-              ADDITIONAL CONDITIONS:<br/>
-              T. T. REIMBURSEMENT IS PROHIBITED.<br/>
-              ALL DOCUMENTS MUST BE MARKED THE S/C NO. AND L/C NO.<br/>
-              （2）其他资料：<br/>
-              提单号码：<Sel id="bl_no" label="⑥" text="KTT1245678" /><br/>
-              货物总尺码：<Sel id="bl_meas" label="⑦" text="25 CBMS" /><br/>
-              船名：第一程：DONGFANG     第二程：MAKIS V. 002 &rarr; <Sel id="bl_vessel" label="⑧" text="DONGFANG / MAKIS V. 002" /><br/>
-              转运港：中国香港<br/>
-              封志号：123456 CY/CY<br/>
-              提单签发地点：<Sel id="bl_place" label="⑨" text="GUANGZHOU, CHINA" /><br/>
-              保险费：USD 100.00<br/>
-              承运人：ABC SHIPPING CO.<br/>
-              提单装船批注日期：JULY 11, 202x<br/>
-              货物总毛重：<Sel id="bl_weight" label="⑩" text="6,500 KGS" /><br/>
-              唛头：<br/><Sel id="bl_marks" label="⑪" text={`ABC\nHELSINKI\nNO. 1-800`} /><br/>
-              集装箱号：SIHUSSSASYDQCD<br/>
-              附加费：USD 300.00<br/>
-              承运人代理人：XYZ SHIPPING CO.<br/>
-              提单签发日期：202x年7月10日 &rarr; <Sel id="bl_issuedate" label="⑫" text="GUANGZHOU, CHINA JULY 10, 202x" /><br/>
-              提单签发人：李溪<br/>
-              货物由托运人负责装箱、计数及封箱、整箱装，由集装箱堆场至集装箱堆场。<br/>
+              APPLICANT (Notify): <Sel id="bl_notify" label="②" text="FFK CORP. AKEKSANTERINK AUTO P. O. BOX 9, FINLAND" /><br/>
+              POL: <Sel id="bl_pol" label="③" text="GUANGZHOU, CHINA" /><br/>
+              POD: <Sel id="bl_pod" label="④" text="HELSINKI, FINLAND" /><br/>
+              TRANS PORT: <Sel id="bl_trans" label="⑤" text="HONG KONG" /><br/>
+              FINAL DEST: <Sel id="bl_final" label="⑥" text="HELSINKI, FINLAND" /><br/>
+              DESCRIPTION: <Sel id="bl_desc" label="⑦" text="9,600 PCS OF WOMEN'S SWEATERS" /><br/>
+              B/L NO: <Sel id="bl_no" label="⑧" text="KTT1245678" /><br/>
+              MEAS: <Sel id="bl_meas" label="⑨" text="25 CBMS" /><br/>
+              Pre-carriage: <Sel id="bl_pre" label="⑩" text="DONG FANG" /><br/>
+              Vessel: <Sel id="bl_vessel" label="⑪" text="MAKIS V. 002" /><br/>
+              GROSS WEIGHT: <Sel id="bl_weight" label="⑫" text="6,500 KGS" /><br/>
+              Container/Seal: <Sel id="bl_cntr" label="⑬" text={`SIHUSSSASYDQCD\n123456 CY/CY`} /><br/>
+              Marks: <Sel id="bl_marks" label="⑭" text={`ABC\nHELSINKI\nNO. 1-800`} /><br/>
+              Issue Date: <Sel id="bl_issuedate" label="⑮" text="GUANGZHOU, CHINA JULY 10, 202x" /><br/>
+              On Board Date: <Sel id="bl_boarddate" label="⑯" text="JULY 10, 202x" /><br/>
               <div className="bg-yellow-50 p-2 mt-2 border border-yellow-200 text-gray-600 rounded">
-                <strong>[系统辅助生成数据]</strong><br/>
-                托运人 (Shipper): <Sel id="bl_shipper" label="⑬" text="GUANGDONG RONGHUA TRADE CO., LTD. 168 DEZHENG ROAD SOUTH, GUANGZHOU, CHINA" /><br/>
-                收货人 (Consignee): <Sel id="bl_consignee" label="⑭" text="TO ORDER OF METITA BANK LTD." /><br/>
-                件数：<Sel id="bl_pkgs" label="⑮" text="800 CARTONS" /> (9600/12)<br/>
-                运费：<Sel id="bl_freight" label="⑯" text="FREIGHT PREPAID" /><br/>
-                签署：<Sel id="bl_sign" label="⑰" text="XYZ SHIPPING CO. AS AGENT FOR THE CARRIER: ABC SHIPPING CO." />
+                <strong>[推导数据]</strong><br/>
+                Shipper: <Sel id="bl_shipper" label="⑰" text="GUANGDONG RONGHUA TRADE CO., LTD. 168 DEZHENG ROAD SOUTH, GUANGZHOU, CHINA" /><br/>
+                Consignee: <Sel id="bl_consignee" label="⑱" text="TO ORDER OF METITA BANK LTD." /><br/>
+                Pkgs: <Sel id="bl_pkgs" label="⑲" text="800 CARTONS" /><br/>
+                Say Total: <Sel id="bl_saypkgs" label="⑳" text="EIGHT HUNDRED CARTONS ONLY" /><br/>
+                No. of Originals: <Sel id="bl_origs" label="㉑" text="THREE" /><br/>
+                Signed by: <Sel id="bl_sign" label="㉒" text="XYZ SHIPPING CO. AS AGENT FOR THE CARRIER: ABC SHIPPING CO." />
               </div>
             </TextBlock>
           );
         };
 
         const SourceInsurance = ({ currentSelection, onSelect, usedItems }) => {
-          const Sel = (props) => (
-            <Selectable 
-              {...props} 
-              onSelect={onSelect} 
-              isSelected={currentSelection?.text === props.text} 
-              isUsed={usedItems.has(props.id)}
-            />
-          );
-          
-          return (
-            <TextBlock>
-              SOME MSG FROM L/C<br/>
-              L/C NO. 6104-309-2    DATED: NOV. 27, 2024<br/>
-              APPLICANT: WOODLAND LIMITED, 450 CASTLE ROAD, NEW YORK, U.S.<br/>
-              BENEFICIARY: CHINA TOP TOY CORP. , 724 DONGFENG RD, GUANGZHOU, CHINA<br/>
-              AMOUNT: USD 3500<br/>
-              DESCRIPTION OF GOODS:<br/>
-              <Sel id="ins_goods" label="①" text="1000 PCS OF STUFFED TOYS DETAILS AS PER ORDER NO.P01009" /><br/>
-              CIF NEW YORK USD 3.5 PER PC<br/>
-              SHIPPMENT:<br/>
-              FROM CHINESE GUANGZHOU PORT TO NEW YORK AMERICA. PARTIAL SHIPMENTS AND TRANSSHIPMENT ALLOWED.<br/>
-              DOCUMENTS:<br/>
-              INSURANCE POLICY OR CERTIFICATE IN DUPLICATE ISSUED IN AN IRREVOCABLE FORM BLANK ENDORSED COVERING THE GOODS FOR INVOICE AMOUNT PLUS 10 PENCENT AGAINST THE FOLLOWING RISKS: <Sel id="ins_risks" label="②" text="ALL RISKS AND WAR RISKS AS PER OCEAN MARINE CARGO CLAUSES OF THE PICC DATED 01/01/1981" />.<br/>
-              SOME MSG FROM S/O (SHIPPING ORDER)<br/>
-              THE GOODS ARE PACKED IN CARTONS OF 10 PCS EACH. AND THE GOODS SHIPPED FROM GUANGZHOU BY <Sel id="ins_vessel" label="③" text="S. S. YUETONG-542" /> ON <Sel id="ins_date" label="④" text="15/12/2024" /> WITH TRANSSHIPMENT AT HONG KONG.<br/>
-              INVOICE NO: <Sel id="ins_inv" label="⑤" text="AG(29)88012" /><br/>
-              SHIPPING MARKS:<br/>
-              <Sel id="ins_marks" label="⑥" text={`WOODLAND\nNEW YORK\nNo. P01009`} /><br/>
-              
-              <div className="bg-yellow-50 p-2 mt-4 border border-yellow-200 text-gray-600 rounded">
-                <strong>[系统辅助生成数据]</strong><br/>
-                Insured Value (110%): <Sel id="ins_amount" label="⑦" text="USD 3,850.00" /> (3500 * 1.1)<br/>
-                Say Total: <Sel id="ins_say" label="⑧" text="SAY US DOLLARS THREE THOUSAND EIGHT HUNDRED AND FIFTY ONLY" /><br/>
-                Quantity: <Sel id="ins_qty" label="⑨" text="100 CTNS" /><br/>
-                Insured: <Sel id="ins_insured" label="⑩" text="CHINA TOP TOY CORP. 724 DONGFENG RD., GUANGZHOU, CHINA" /><br/>
-                Claim Payable: <Sel id="ins_claim" label="⑪" text="NEW YORK, U.S" /><br/>
-                From/To: <Sel id="ins_from" label="⑫" text="GUANGZHOU PORT, CHINA" /> / <Sel id="ins_to" label="⑬" text="NEW YORK, USA" /><br/>
-                Date: <Sel id="ins_date_issue" label="⑭" text="Dec.12,2024" />
-              </div>
-            </TextBlock>
-          );
-        };
-
-        const SourceDraft = ({ currentSelection, onSelect, usedItems }) => {
-          const Sel = (props) => (
-            <Selectable 
-              {...props} 
-              onSelect={onSelect} 
-              isSelected={currentSelection?.text === props.text} 
-              isUsed={usedItems.has(props.id)}
-            />
-          );
+          const Sel = (props) => <Selectable {...props} onSelect={onSelect} isSelected={currentSelection?.text === props.text} isUsed={usedItems.has(props.id)} />;
           return (
             <TextBlock>
               <div className="bg-blue-50 p-3 text-xs text-blue-800 mb-4 rounded border border-blue-200 shadow-sm">
-                <strong>练习 1</strong><br/>
-                根据下列信息填制汇票。
+                <strong>Insurance Policy</strong><br/>
+                数据来源：《外贸单证自制 1.docx》
               </div>
-              ISSUING BANK: BANK OF CHINA, SINGAPORE<br/>
-              L/C NO. : <Sel id="dr_lc" label="①" text="136A-523" /><br/>
-              PLACE AND DATE OF L/C: SINGAPORE  <Sel id="dr_lcdate" label="②" text="APRIL 5TH, 2020" /><br/>
-              APPLICANT: OVERSEAS TRADE COMPANY, SINGAPORE<br/>
-              BENEFICIARY:  ZHEJIANG TEXTILE IMPORT AND EXPORT CORPORATION<br/>
-              ADVISING BANK: BANK OF CHINA, ZHEJIANG BRANCH<br/>
-              AMOUNT: USD 10000.00<br/>
-              CREDIT AVAILABLE WITH BANKE OF CHINA, NINGBO BY NEGOTIATION AGAINST PRESENTATION OF THE DOCUMENTS DETAILED HEREIN AND OF BENEFICIARY'S DRAFTS AT <Sel id="dr_tenor" label="③" text="30 DAYS AFTER" /> SIGHT FOR 93% OF THE INVOICE VALUE DRAWN ON US.<br/>
-              TRADE TERMS: CFR NINGBO<br/>
-              INVOICE NO.: TS0021<br/>
-              PLACE AND DATE OF B/E: <Sel id="dr_place" label="④" text="NINGBO, CHINA APRIL 20TH, 2020" /><br/>
-              DRAFT NO: <Sel id="dr_no" label="⑤" text="3356719" /><br/>
-              
-              <div className="bg-yellow-50 p-2 mt-4 border border-yellow-200 text-gray-600 rounded">
-                <strong>[系统辅助生成数据]</strong><br/>
-                Amount (93%): <Sel id="dr_amount" label="⑥" text="USD 9,300.00" /><br/>
-                Amount in Words: <Sel id="dr_word" label="⑦" text="US DOLLARS NINE THOUSAND THREE HUNDRED ONLY" /><br/>
-                Drawn On: <Sel id="dr_drawee" label="⑧" text="BANK OF CHINA, SINGAPORE" /><br/>
-                Payee: <Sel id="dr_payee" label="⑨" text="BANK OF CHINA, NINGBO" /><br/>
-                Issuing Bank: <Sel id="dr_bank" label="⑩" text="BANK OF CHINA, SINGAPORE" />
+              INVOICE NO: <Sel id="ins_inv" label="①" text="AG(29)88012" /><br/>
+              INSURED: <Sel id="ins_insured" label="②" text="CHINA TOP TOY CORP. 724 DONGFENG RD., GUANGZHOU, CHINA" /><br/>
+              MARKS: <Sel id="ins_marks" label="③" text={`WOODLAND\nNEW YORK\nNo. P01009`} /><br/>
+              QTY: <Sel id="ins_qty" label="④" text="100 CTNS" /><br/>
+              DESC: <Sel id="ins_goods" label="⑤" text="1000 PCS OF STUFFED TOYS DETAILS AS PER ORDER NO.P01009" /><br/>
+              AMOUNT: <Sel id="ins_amount" label="⑥" text="USD 3,850.00" /><br/>
+              VESSEL: <Sel id="ins_vessel" label="⑦" text="S. S. YUETONG-542" /><br/>
+              SAILING: <Sel id="ins_slg" label="⑧" text="15/12/2024" /><br/>
+              FROM/TO: <Sel id="ins_route" label="⑨" text="GUANGZHOU PORT, CHINA" /> / <Sel id="ins_to" label="⑩" text="NEW YORK, USA" /><br/>
+              CONDITIONS: <Sel id="ins_cond" label="⑪" text="COVERING ALL RISKS AND WAR RISKS AS PER OCEAN MARINE CARGO CLAUSES OF THE PICC DATED 01/01/1981" /><br/>
+              AGENT (Survey): <Sel id="ins_agent" label="⑫" text="THE PEOPLE'S INSURANCE CO. OF CHINA GUANGZHOU BRANCH" /><br/>
+              PAYABLE: <Sel id="ins_pay" label="⑬" text="NEW YORK, U.S" /><br/>
+              DATE: <Sel id="ins_date" label="⑭" text="Dec.12,2024" /><br/>
+              <div className="bg-yellow-50 p-2 mt-2 border border-yellow-200 text-gray-600 rounded">
+                <strong>[辅助填写]</strong><br/>
+                Policy No: <Sel id="ins_pol" label="⑮" text="NP47/12" /><br/>
+                Say Total: <Sel id="ins_say" label="⑯" text="SAY US DOLLARS THREE THOUSAND EIGHT HUNDRED AND FIFTY ONLY" /><br/>
+                Premium/Rate: <Sel id="ins_rate" label="⑰" text="AS ARRANGED" /><br/>
+                Signature: <Sel id="ins_sign" label="⑱" text="THE PEOPLE'S INSURANCE CO. OF CHINA" />
               </div>
             </TextBlock>
           );
         };
 
-        // ==========================================
-        // 4. 右侧表单单元格 (支持检查功能)
-        // ==========================================
+        const SourceDraft = ({ currentSelection, onSelect, usedItems, practiceMode }) => {
+          const Sel = (props) => <Selectable {...props} onSelect={onSelect} isSelected={currentSelection?.text === props.text} isUsed={usedItems.has(props.id)} />;
+          
+          if (practiceMode === 'draft1') {
+             return (
+              <TextBlock>
+                <div className="bg-blue-50 p-3 text-xs text-blue-800 mb-4 rounded border border-blue-200 shadow-sm">
+                  <strong>练习 1 (Draft)</strong><br/>
+                  来源：《汇票练习要求.docx》Practice 1<br/>
+                  出票人(Drawer): ZHEJIANG TEXTILE
+                </div>
+                L/C NO: <Sel id="dr1_lc" label="①" text="136A-523" /><br/>
+                L/C DATE: <Sel id="dr1_lcdate" label="②" text="APRIL 5TH, 2020" /><br/>
+                TERM: <Sel id="dr1_tenor" label="③" text="30 DAYS AFTER" /> SIGHT<br/>
+                PLACE/DATE: <Sel id="dr1_place" label="④" text="NINGBO, CHINA APRIL 20TH, 2020" /><br/>
+                NO: <Sel id="dr1_no" label="⑤" text="335673" /> (参考答案)<br/>
+                DRAWEE: <Sel id="dr1_drawee" label="⑥" text="BANK OF CHINA, SINGAPORE" /><br/>
+                PAYEE: <Sel id="dr1_payee" label="⑦" text="BANK OF CHINA, NINGBO" /><br/>
+                AMOUNT: <Sel id="dr1_amt" label="⑧" text="USD 9,300.00" /><br/>
+                WORDS: <Sel id="dr1_word" label="⑨" text="US DOLLARS NINE THOUSAND THREE HUNDRED ONLY" /><br/>
+                INTEREST: <Sel id="dr1_int" label="⑩" text="---" /><br/>
+                DRAWER: <Sel id="dr1_drawer" label="⑪" text="ZHEJIANG TEXTILE IMPORT AND EXPORT CORPORATION" />
+              </TextBlock>
+             );
+          } else {
+             return (
+              <TextBlock>
+                <div className="bg-blue-50 p-3 text-xs text-blue-800 mb-4 rounded border border-blue-200 shadow-sm">
+                  <strong>练习 2 (Draft)</strong><br/>
+                  来源：《汇票练习要求.docx》Practice 2<br/>
+                  出票人(Drawer): ZHEJIANG KINGTEX
+                </div>
+                L/C NO: <Sel id="dr2_lc" label="①" text="123A-456" /><br/>
+                L/C DATE: <Sel id="dr2_lcdate" label="②" text="OCT. 6, 2024" /><br/>
+                TERM: <Sel id="dr2_tenor" label="③" text="AT SIGHT" /><br/>
+                DRAWN ON: <Sel id="dr2_drawee" label="④" text="THE BANK OF TOKYO, LTD., NEWYORK AGENCY, NEW YORK, N.Y." /><br/>
+                PLACE/DATE: <Sel id="dr2_place" label="⑤" text="HANGZHOU, CHINA OCT. 16, 2024" /><br/>
+                NO: <Sel id="dr2_no" label="⑥" text="HZ66517" /><br/>
+                AMOUNT: <Sel id="dr2_amt" label="⑦" text="USD 66,500.00" /><br/>
+                WORDS: <Sel id="dr2_word" label="⑧" text="SAY US DOLLARS SIXTY-SIX THOUSAND FIVE HUNDRED ONLY" /><br/>
+                PAYEE: <Sel id="dr2_payee" label="⑨" text="BANK OF CHINA, ZHEJIANG BRANCH" /><br/>
+                INTEREST: <Sel id="dr2_int" label="⑩" text="---" /><br/>
+                DRAWER: <Sel id="dr2_drawer" label="⑪" text="ZHEJIANG KINGTEX TRADING CO., LTD." />
+              </TextBlock>
+             );
+          }
+        };
 
+        // ==========================================
+        // 4. 右侧表单单元格
+        // ==========================================
         const InputCell = ({ id, value, onChange, onFocus, activeId, label, isTextArea = false, isChecked, correctValue }) => {
           const isActive = activeId === id;
           const val = value || '';
+          const normalize = (str) => str ? str.toString().replace(/[\s,.]+/g, '').toLowerCase() : '';
           
-          const normalize = (str) => str ? str.toString().replace(/\s+/g, '').toLowerCase() : '';
-          const isCorrect = isChecked && normalize(val) === normalize(correctValue);
+          let isCorrect = true;
+          if (isChecked) {
+             if (id === 'no' && correctValue === '335673') {
+                // Draft 1特殊处理，两个号码都算对
+                const v = normalize(val);
+                isCorrect = (v === '335673' || v === '3356719');
+             } else {
+                isCorrect = normalize(val) === normalize(correctValue);
+             }
+          }
           const isWrong = isChecked && !isCorrect;
 
           let borderStyle = 'border-gray-400 hover:border-blue-300';
@@ -429,13 +437,8 @@
             bgStyle = 'bg-yellow-200';
             ringStyle = 'ring-2 ring-yellow-300 shadow-inner z-10';
           } else if (isChecked) {
-            if (isCorrect) {
-              borderStyle = 'border-green-500';
-              bgStyle = 'bg-green-50';
-            } else {
-              borderStyle = 'border-red-500';
-              bgStyle = 'bg-red-50';
-            }
+            borderStyle = isCorrect ? 'border-green-500' : 'border-red-500';
+            bgStyle = isCorrect ? 'bg-green-50' : 'bg-red-50';
           }
 
           return (
@@ -445,17 +448,16 @@
                 {isTextArea ? (
                   <textarea
                     id={id}
-                    className={`w-full h-full border text-sm px-1 transition-all duration-200 focus:outline-none font-sans resize-none py-1 ${borderStyle} ${bgStyle} ${ringStyle}`}
+                    className={`w-full h-full border text-sm px-1 transition-all duration-200 focus:outline-none font-typewriter resize-none py-1 ${borderStyle} ${bgStyle} ${ringStyle}`}
                     value={val}
                     onChange={(e) => onChange(id, e.target.value)}
                     onClick={(e) => { e.stopPropagation(); onFocus(id); }}
-                    placeholder=""
                   />
                 ) : (
                   <input
                     id={id}
                     type="text"
-                    className={`w-full h-full border text-sm px-1 transition-all duration-200 focus:outline-none font-sans ${borderStyle} ${bgStyle} ${ringStyle}`}
+                    className={`w-full h-full border text-sm px-1 transition-all duration-200 focus:outline-none font-typewriter ${borderStyle} ${bgStyle} ${ringStyle}`}
                     value={val}
                     onChange={(e) => onChange(id, e.target.value)}
                     onClick={(e) => { e.stopPropagation(); onFocus(id); }}
@@ -465,7 +467,7 @@
               </div>
               {isWrong && (
                 <div className="tooltip-enter hidden group-hover:block absolute top-full left-0 mt-1 bg-red-100 text-red-700 text-[10px] p-2 border border-red-300 rounded shadow-lg z-50 w-full break-words min-w-[100px]">
-                  <strong>正确:</strong> {correctValue || '(空)'}
+                  <strong>正确答案:</strong> {correctValue || '(空)'}
                 </div>
               )}
             </div>
@@ -478,59 +480,80 @@
 
         function App() {
           const [activeTab, setActiveTab] = useState('invoice');
+          const [draftMode, setDraftMode] = useState('draft1'); 
+          const [invoiceMode, setInvoiceMode] = useState('invoice1'); 
           const [currentSelection, setCurrentSelection] = useState(null);
-          const [usedItems, setUsedItems] = useState(new Set()); // 追踪已使用的选项ID
+          const [usedItems, setUsedItems] = useState(new Set());
           const [isChecked, setIsChecked] = useState(false);
-          const [formData, setFormData] = useState({ invoice: {}, bl: {}, insurance: {}, draft: {} });
+          const [formData, setFormData] = useState({ 
+            invoice1: {}, 
+            invoice2: {},
+            bl: {}, 
+            insurance: {}, 
+            draft1: {},
+            draft2: {} 
+          });
 
           const handleSourceSelect = (text, id) => {
             setCurrentSelection({ text, id });
-            // 将点击的ID加入已使用集合
-            setUsedItems(prev => {
-              const newSet = new Set(prev);
-              newSet.add(id);
-              return newSet;
-            });
+            setUsedItems(prev => new Set(prev).add(id));
           };
 
           const handleFieldClick = (fieldId) => {
             if (currentSelection) {
+              let targetKey = activeTab;
+              if (activeTab === 'draft') targetKey = draftMode;
+              if (activeTab === 'invoice') targetKey = invoiceMode;
+
+              // 如果选择的是desc detail，追加到desc字段
+              let newValue = currentSelection.text;
+              if (fieldId === 'desc' && formData[targetKey]?.desc) {
+                 // 简单的追加逻辑
+                 if (!formData[targetKey].desc.includes(newValue)) {
+                    newValue = formData[targetKey].desc + '\n' + newValue;
+                 } else {
+                    newValue = formData[targetKey].desc;
+                 }
+              }
+
               setFormData(prev => ({
                 ...prev,
-                [activeTab]: {
-                  ...prev[activeTab],
-                  [fieldId]: currentSelection.text
+                [targetKey]: {
+                  ...prev[targetKey],
+                  [fieldId]: newValue
                 }
               }));
             }
           };
 
           const handleFieldChange = (id, value) => {
+            let targetKey = activeTab;
+            if (activeTab === 'draft') targetKey = draftMode;
+            if (activeTab === 'invoice') targetKey = invoiceMode;
+
             setFormData(prev => ({
               ...prev,
-              [activeTab]: {
-                ...prev[activeTab],
+              [targetKey]: {
+                ...prev[targetKey],
                 [id]: value
               }
             }));
           };
 
-          const checkAnswers = () => {
-            setIsChecked(true);
-          };
-
+          const checkAnswers = () => setIsChecked(true);
           const resetCheck = () => {
             setIsChecked(false);
-            setFormData(prev => ({ ...prev, [activeTab]: {} }));
-            setUsedItems(new Set()); // 重置时也清除“已使用”状态
+            let targetKey = activeTab;
+            if (activeTab === 'draft') targetKey = draftMode;
+            if (activeTab === 'invoice') targetKey = invoiceMode;
+            setFormData(prev => ({ ...prev, [targetKey]: {} }));
+            setUsedItems(new Set());
           };
 
           useEffect(() => {
             setCurrentSelection(null);
             setIsChecked(false);
-            // 切换 Tab 时不清除 usedItems，保留用户的操作记录体验更佳
-            // 如果希望切换 Tab 清除，可在此处添加 setUsedItems(new Set())
-          }, [activeTab]);
+          }, [activeTab, draftMode, invoiceMode]);
 
           return (
             <div className="flex flex-col h-screen bg-gray-100 font-sans text-gray-800">
@@ -538,24 +561,18 @@
               {/* Header */}
               <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between shadow-sm z-20">
                 <h1 className="text-xl font-bold text-gray-800 tracking-tight flex items-center gap-2">
-                  <span>📑</span> +1教你填单证
+                  <span>📑</span> +1教你填单证 (终极完美版)
                 </h1>
                 <div className="flex items-center gap-4">
                    <div className="flex items-center gap-3 bg-blue-50 px-4 py-2 rounded-lg border border-blue-100 text-xs text-blue-800">
-                      <span className="font-bold">模式：</span>
-                      点击左侧 <span className="bg-yellow-200 px-1 rounded border border-blue-400">① 选项</span> &rarr; 点击右侧空格
+                      <span className="font-bold">操作指南：</span>
+                      左侧点击<span className="bg-yellow-200 px-1 rounded border border-blue-400">黄色选项</span> &rarr; 右侧点击空格填入
                    </div>
-                   <button 
-                     onClick={checkAnswers}
-                     className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-bold shadow transition-colors flex items-center gap-2"
-                   >
-                     <span>✅</span> 提交检查
+                   <button onClick={checkAnswers} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-bold shadow transition-colors flex items-center gap-2">
+                     <span>✅</span> 检查
                    </button>
-                   <button 
-                     onClick={resetCheck}
-                     className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded font-bold transition-colors text-sm"
-                   >
-                     重置
+                   <button onClick={resetCheck} className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded font-bold transition-colors text-sm">
+                     清空重填
                    </button>
                 </div>
               </header>
@@ -587,21 +604,40 @@
                 
                 {/* Left Panel */}
                 <div className="w-5/12 bg-white border-r border-gray-200 flex flex-col shadow-[4px_0_10px_-5px_rgba(0,0,0,0.1)] z-10">
-                  <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
-                    <h2 className="font-bold text-gray-700 text-sm">📄 资料区 (点击序号选中)</h2>
-                  </div>
-                  <div className="flex-1 overflow-y-auto p-6 relative">
-                    {/* 传递 usedItems 给 Source 组件 */}
-                    {activeTab === 'invoice' && <SourceInvoice onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} />}
-                    {activeTab === 'bl' && <SourceBL onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} />}
-                    {activeTab === 'insurance' && <SourceInsurance onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} />}
-                    {activeTab === 'draft' && <SourceDraft onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} />}
-                    
-                    {currentSelection && (
-                      <div className="fixed bottom-4 left-4 bg-gray-800 text-white px-4 py-2 rounded shadow-lg text-sm max-w-sm truncate z-50 border-2 border-green-400">
-                        已选中: <span className="font-mono text-green-300">{currentSelection.text}</span>
+                  <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
+                    <h2 className="font-bold text-gray-700 text-sm">📄 资料区</h2>
+                    {/* Invoice Switcher */}
+                    {activeTab === 'invoice' && (
+                      <div className="flex bg-gray-200 rounded p-1">
+                        <button 
+                          onClick={() => setInvoiceMode('invoice1')} 
+                          className={`px-3 py-1 text-xs rounded ${invoiceMode === 'invoice1' ? 'bg-white shadow text-blue-600 font-bold' : 'text-gray-600'}`}
+                        >练习 1</button>
+                        <button 
+                          onClick={() => setInvoiceMode('invoice2')} 
+                          className={`px-3 py-1 text-xs rounded ${invoiceMode === 'invoice2' ? 'bg-white shadow text-blue-600 font-bold' : 'text-gray-600'}`}
+                        >练习 2</button>
                       </div>
                     )}
+                    {/* Draft Switcher */}
+                    {activeTab === 'draft' && (
+                      <div className="flex bg-gray-200 rounded p-1">
+                        <button 
+                          onClick={() => setDraftMode('draft1')} 
+                          className={`px-3 py-1 text-xs rounded ${draftMode === 'draft1' ? 'bg-white shadow text-blue-600 font-bold' : 'text-gray-600'}`}
+                        >练习 1</button>
+                        <button 
+                          onClick={() => setDraftMode('draft2')} 
+                          className={`px-3 py-1 text-xs rounded ${draftMode === 'draft2' ? 'bg-white shadow text-blue-600 font-bold' : 'text-gray-600'}`}
+                        >练习 2</button>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1 overflow-y-auto p-6 relative">
+                    {activeTab === 'invoice' && <SourceInvoice onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} practiceMode={invoiceMode} />}
+                    {activeTab === 'bl' && <SourceBL onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} />}
+                    {activeTab === 'insurance' && <SourceInsurance onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} />}
+                    {activeTab === 'draft' && <SourceDraft onSelect={handleSourceSelect} currentSelection={currentSelection} usedItems={usedItems} practiceMode={draftMode} />}
                   </div>
                 </div>
 
@@ -612,51 +648,56 @@
                     {/* Invoice Form */}
                     {activeTab === 'invoice' && (
                       <div className="flex flex-col h-full gap-4">
+                        <div className="absolute top-0 right-0 bg-gray-100 text-gray-500 text-[10px] px-2 py-1">Mode: {invoiceMode === 'invoice1' ? 'Goodlucky Co.' : 'Power Play Inc.'}</div>
+                        
                         <div className="text-center font-bold text-2xl border-b-2 border-black pb-2">COMMERCIAL INVOICE</div>
                         <div className="grid grid-cols-2 gap-4">
                            <div className="space-y-4">
-                              <div className="h-20"><InputCell id="issuer" label="ISSUER" isTextArea value={formData.invoice.issuer} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.issuer} /></div>
-                              <div className="h-20"><InputCell id="to" label="TO" isTextArea value={formData.invoice.to} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.to} /></div>
+                              <div className="h-20"><InputCell id="issuer" label="ISSUER" isTextArea value={formData[invoiceMode].issuer} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].issuer} /></div>
+                              <div className="h-20"><InputCell id="to" label="TO" isTextArea value={formData[invoiceMode].to} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].to} /></div>
                            </div>
                            <div className="grid grid-cols-2 gap-2">
-                              <div className="col-span-2"><InputCell id="invNo" label="Invoice No." value={formData.invoice.invNo} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.invNo} /></div>
-                              <div className="col-span-2"><InputCell id="date" label="Date" value={formData.invoice.date} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.date} /></div>
-                              <div className="col-span-2"><InputCell id="scNo" label="S/C No." value={formData.invoice.scNo} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.scNo} /></div>
-                              <div className="col-span-2"><InputCell id="lcNo" label="L/C No." value={formData.invoice.lcNo} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.lcNo} /></div>
+                              <div className="col-span-2"><InputCell id="invNo" label="Invoice No." value={formData[invoiceMode].invNo} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].invNo} /></div>
+                              <div className="col-span-2"><InputCell id="date" label="Date" value={formData[invoiceMode].date} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].date} /></div>
+                              <div className="col-span-2"><InputCell id="scNo" label="S/C No." value={formData[invoiceMode].scNo} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].scNo} /></div>
+                              <div className="col-span-2"><InputCell id="lcNo" label="L/C No." value={formData[invoiceMode].lcNo} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].lcNo} /></div>
                            </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                            <InputCell id="transport" label="Transport Details" value={formData.invoice.transport} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.transport} />
-                            <InputCell id="payment" label="Terms of Payment" value={formData.invoice.payment} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.payment} />
+                            <InputCell id="transport" label="Transport Details" value={formData[invoiceMode].transport} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].transport} />
+                            <div className="grid grid-cols-2 gap-2">
+                              <InputCell id="tradeTerms" label="Trade Terms" value={formData[invoiceMode].tradeTerms} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].tradeTerms} />
+                              <InputCell id="payment" label="Terms of Payment" value={formData[invoiceMode].payment} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].payment} />
+                            </div>
                         </div>
-                        
-                        {/* 修改：减小高度，取消 flex-1，避免强制撑满
-                            原: className="flex-1 border border-black min-h-[400px] flex flex-col" 
-                        */}
                         <div className="border border-black min-h-[250px] flex flex-col">
-                           <div className="flex border-b border-black font-bold text-center bg-gray-50">
-                              <div className="w-[20%] p-1 border-r border-black">Marks</div>
-                              <div className="w-[40%] p-1 border-r border-black">Description</div>
+                           <div className="flex border-b border-black font-bold text-center bg-gray-50 text-[12px]">
+                              <div className="w-[20%] p-1 border-r border-black">Marks and Numbers</div>
+                              <div className="w-[40%] p-1 border-r border-black">Number and kind of package<br/>Description of goods</div>
                               <div className="w-[15%] p-1 border-r border-black">Quantity</div>
                               <div className="w-[15%] p-1 border-r border-black">Unit Price</div>
                               <div className="w-[10%] p-1">Amount</div>
                            </div>
                            <div className="flex flex-1">
-                              <div className="w-[20%] p-1 border-r border-black"><InputCell id="marks" isTextArea className="border-none" value={formData.invoice.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.marks} /></div>
-                              <div className="w-[40%] p-1 border-r border-black"><InputCell id="desc" isTextArea className="border-none" value={formData.invoice.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.desc} /></div>
-                              <div className="w-[15%] p-1 border-r border-black"><InputCell id="qty" isTextArea className="border-none" value={formData.invoice.qty} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.qty} /></div>
-                              <div className="w-[15%] p-1 border-r border-black"><InputCell id="price" isTextArea className="border-none" value={formData.invoice.price} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.price} /></div>
-                              <div className="w-[10%] p-1"><InputCell id="amount" isTextArea className="border-none" value={formData.invoice.amount} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.amount} /></div>
+                              <div className="w-[20%] p-1 border-r border-black"><InputCell id="marks" isTextArea className="border-none" value={formData[invoiceMode].marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].marks} /></div>
+                              <div className="w-[40%] p-1 border-r border-black"><InputCell id="desc" isTextArea className="border-none" value={formData[invoiceMode].desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].desc} /></div>
+                              <div className="w-[15%] p-1 border-r border-black"><InputCell id="qty" isTextArea className="border-none" value={formData[invoiceMode].qty} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].qty} /></div>
+                              <div className="w-[15%] p-1 border-r border-black"><InputCell id="price" isTextArea className="border-none" value={formData[invoiceMode].price} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].price} /></div>
+                              <div className="w-[10%] p-1"><InputCell id="amount" isTextArea className="border-none" value={formData[invoiceMode].amount} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].amount} /></div>
                            </div>
                            <div className="border-t border-black p-2 flex justify-end items-center gap-2">
                               <span className="font-bold">Total:</span>
-                              <div className="w-40"><InputCell id="total" value={formData.invoice.total} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.total} /></div>
+                              <div className="w-40"><InputCell id="total" value={formData[invoiceMode].total} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].total} /></div>
                            </div>
                         </div>
-
                         <div className="flex gap-2 items-center">
                            <span className="font-bold whitespace-nowrap">Say Total:</span>
-                           <InputCell id="sayTotal" value={formData.invoice.sayTotal} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.sayTotal} />
+                           <InputCell id="sayTotal" value={formData[invoiceMode].sayTotal} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].sayTotal} />
+                        </div>
+                        <div className="flex justify-end mt-4">
+                           <div className="w-64 border-t border-black pt-1">
+                              <div className="h-8"><InputCell id="signature" label="Signed by" value={formData[invoiceMode].signature} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS[invoiceMode].signature} /></div>
+                           </div>
                         </div>
                       </div>
                     )}
@@ -681,37 +722,51 @@
                          </div>
                          <div className="grid grid-cols-2 border-b border-black">
                             <div className="grid grid-cols-2 border-r border-black">
-                               <div className="h-10 border-r border-b border-black p-1"><InputCell id="vessel" label="Vessel" value={formData.bl.vessel} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.vessel} /></div>
-                               <div className="h-10 border-b border-black p-1"><InputCell id="voy" label="Voy No." value={formData.bl.voy} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.voy} /></div>
+                               <div className="h-10 border-r border-b border-black p-1"><InputCell id="preCarriage" label="Pre-carriage by" value={formData.bl.preCarriage} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.preCarriage} /></div>
+                               <div className="h-10 border-b border-black p-1"><InputCell id="vessel" label="Ocean Vessel" value={formData.bl.vessel} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.vessel} /></div>
                                <div className="h-10 border-r border-black p-1"><InputCell id="pol" label="Port of Loading" value={formData.bl.pol} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.pol} /></div>
                                <div className="h-10 p-1"><InputCell id="pod" label="Port of Discharge" value={formData.bl.pod} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.pod} /></div>
                             </div>
-                            <div className="p-1"><InputCell id="final" label="Final Destination" value={formData.bl.final} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.final} /></div>
+                            <div className="grid grid-rows-2">
+                               <div className="p-1 border-b border-black"><InputCell id="transshipment" label="Port of Transshipment" value={formData.bl.transshipment} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.transshipment} /></div>
+                               <div className="p-1"><InputCell id="final" label="Final Destination" value={formData.bl.final} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.final} /></div>
+                            </div>
                          </div>
                          <div className="flex border-b border-black text-center font-bold bg-gray-50">
-                            <div className="w-1/4 p-1 border-r border-black">Marks</div>
+                            <div className="w-1/4 p-1 border-r border-black">Container No. / Marks</div>
                             <div className="w-1/6 p-1 border-r border-black">Pkgs</div>
                             <div className="w-1/3 p-1 border-r border-black">Description</div>
                             <div className="w-1/6 p-1 border-r border-black">Weight</div>
                             <div className="w-1/6 p-1">Meas.</div>
                          </div>
-                         
-                         {/* 修改：减小高度，取消 flex-1
-                            原: className="flex flex-1 min-h-[300px]"
-                         */}
-                         <div className="flex min-h-[250px]">
-                            <div className="w-1/4 p-1 border-r border-black"><InputCell id="marks" isTextArea className="border-none" value={formData.bl.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.marks} /></div>
+                         <div className="flex min-h-[200px]">
+                            <div className="w-1/4 flex flex-col border-r border-black">
+                               <div className="h-1/3 border-b border-black p-1">
+                                  <InputCell id="containerNo" label="Container/Seal No." isTextArea className="border-none text-[10px]" value={formData.bl.containerNo} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.containerNo} />
+                               </div>
+                               <div className="flex-1 p-1">
+                                  <InputCell id="marks" label="Marks" isTextArea className="border-none" value={formData.bl.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.marks} />
+                               </div>
+                            </div>
                             <div className="w-1/6 p-1 border-r border-black"><InputCell id="pkgs" isTextArea className="border-none" value={formData.bl.pkgs} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.pkgs} /></div>
                             <div className="w-1/3 p-1 border-r border-black"><InputCell id="desc" isTextArea className="border-none" value={formData.bl.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.desc} /></div>
                             <div className="w-1/6 p-1 border-r border-black"><InputCell id="weight" isTextArea className="border-none" value={formData.bl.weight} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.weight} /></div>
                             <div className="w-1/6 p-1"><InputCell id="meas" isTextArea className="border-none" value={formData.bl.meas} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.meas} /></div>
                          </div>
+                         <div className="border-t border-black p-1 h-12 flex items-center">
+                            <span className="font-bold mr-2 whitespace-nowrap">Total Number of Packages (in words):</span>
+                            <InputCell id="sayPkgs" value={formData.bl.sayPkgs} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.sayPkgs} />
+                         </div>
 
-                         <div className="grid grid-cols-2 h-32 border-t border-black">
+                         <div className="grid grid-cols-2 h-36 border-t border-black">
                             <div className="border-r border-black p-1"><InputCell id="freight" label="Freight & Charges" isTextArea className="border-none" value={formData.bl.freight} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.freight} /></div>
-                            <div className="grid grid-rows-2">
+                            <div className="grid grid-rows-3">
                                <div className="border-b border-black p-1"><InputCell id="placeDate" label="Place and Date of Issue" value={formData.bl.placeDate} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.placeDate} /></div>
-                               <div className="p-1"><InputCell id="signed" label="Signed by" value={formData.bl.signed} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.signed} /></div>
+                               <div className="border-b border-black p-1"><InputCell id="onBoardDate" label="Shipped on Board Date" value={formData.bl.onBoardDate} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.onBoardDate} /></div>
+                               <div className="flex">
+                                  <div className="w-2/3 p-1 border-r border-black"><InputCell id="signed" label="Signed by" value={formData.bl.signed} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.signed} /></div>
+                                  <div className="w-1/3 p-1"><InputCell id="originals" label="No. of Originals" value={formData.bl.originals} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.originals} /></div>
+                               </div>
                             </div>
                          </div>
                       </div>
@@ -719,7 +774,7 @@
 
                     {/* Insurance Form */}
                     {activeTab === 'insurance' && (
-                       <div className="flex flex-col h-full font-serif">
+                       <div className="flex flex-col h-full font-serif text-sm">
                           <div className="text-center mb-6">
                              <h2 className="text-xl font-bold">THE PEOPLE'S INSURANCE COMPANY OF CHINA</h2>
                              <h1 className="text-4xl font-bold my-2">INSURANCE POLICY</h1>
@@ -738,20 +793,19 @@
                              </div>
                              <p className="text-xs text-justify">undertakes to insure the undermentioned goods...</p>
                           </div>
-                          
-                          {/* 修改：减小高度，取消 flex-1
-                             原: className="border border-black mx-4 flex flex-1 min-h-[300px]"
-                          */}
                           <div className="border border-black mx-4 min-h-[150px] flex">
                              <div className="w-[20%] border-r border-black p-1"><InputCell id="marks" label="Marks" isTextArea className="border-none" value={formData.insurance.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.marks} /></div>
                              <div className="w-[15%] border-r border-black p-1"><InputCell id="qty" label="Quantity" isTextArea className="border-none" value={formData.insurance.qty} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.qty} /></div>
                              <div className="w-[45%] border-r border-black p-1"><InputCell id="desc" label="Description" isTextArea className="border-none" value={formData.insurance.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.desc} /></div>
                              <div className="w-[20%] p-1"><InputCell id="amount" label="Amount" isTextArea className="border-none" value={formData.insurance.amount} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.amount} /></div>
                           </div>
-
                           <div className="mx-4 mt-2 flex gap-2">
                              <span className="font-bold">Total Amount:</span>
                              <InputCell id="total" value={formData.insurance.total} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.total} />
+                          </div>
+                          <div className="mx-4 mt-2 flex gap-4">
+                             <div className="flex-1 flex gap-2">Premium: <InputCell id="premium" value={formData.insurance.premium} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.premium} /></div>
+                             <div className="flex-1 flex gap-2">Rate: <InputCell id="rate" value={formData.insurance.rate} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.rate} /></div>
                           </div>
                           <div className="mx-4 mt-4 grid grid-cols-2 gap-4">
                              <div className="flex gap-2">Per Conveyance: <InputCell id="vessel" value={formData.insurance.vessel} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.vessel} /></div>
@@ -763,9 +817,23 @@
                              <span className="font-bold">Conditions:</span>
                              <InputCell id="conditions" isTextArea value={formData.insurance.conditions} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.conditions} />
                           </div>
+                          
+                          <div className="mx-4 mt-4 text-xs text-justify">
+                            Claims if any payable on surrender of the first original of the Policy together with other relevant documents In the event of accident whereby loss or damage may result in a claim under this Policy immediate notice applying for survey must be given to the Company's Agent as mentioned hereunder:
+                          </div>
+
+                          <div className="mx-4 mt-2 flex gap-2">
+                              <span className="font-bold whitespace-nowrap">Survey/Claim Agent:</span>
+                              <InputCell id="agent" value={formData.insurance.agent} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.agent} />
+                          </div>
                           <div className="mx-4 mt-4 grid grid-cols-2 gap-4">
                              <div className="flex gap-2">Payable at: <InputCell id="payable" value={formData.insurance.payable} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.payable} /></div>
                              <div className="flex gap-2">Date: <InputCell id="date" value={formData.insurance.date} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.date} /></div>
+                          </div>
+                          <div className="mx-4 mt-4 text-right">
+                              <div className="inline-block w-64 border-t border-black text-center pt-1">
+                                  <div className="h-8"><InputCell id="signature" label="Authorized Signature" value={formData.insurance.signature} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.signature} /></div>
+                              </div>
                           </div>
                        </div>
                     )}
@@ -773,42 +841,101 @@
                     {/* Draft Form */}
                     {activeTab === 'draft' && (
                       <div className="border border-black p-6 h-full relative">
-                         <div className="absolute top-0 left-0 bg-black text-white px-2 py-1 text-xs">BILL OF EXCHANGE</div>
-                         <div className="flex justify-between mt-8 mb-8 gap-4">
-                            <div className="w-1/3"><InputCell id="no" label="No." value={formData.draft.no} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.no} /></div>
-                            <div className="w-1/3"><InputCell id="place" label="Place & Date" value={formData.draft.place} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.place} /></div>
-                            <div className="w-1/3 border-2 border-dashed border-gray-300"><InputCell id="amountNum" label="Amount (Figures)" value={formData.draft.amountNum} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.amountNum} /></div>
-                         </div>
-                         <div className="space-y-6 text-lg">
-                            <div className="flex items-end gap-2">
-                               <span>At</span>
-                               <div className="w-48"><InputCell id="tenor" value={formData.draft.tenor} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.tenor} /></div>
-                               <span>Sight of this First of Exchange</span>
-                            </div>
-                            <div className="flex items-end gap-2">
-                               <span>Pay to the order of</span>
-                               <div className="flex-1"><InputCell id="payee" value={formData.draft.payee} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.payee} /></div>
-                            </div>
-                            <div className="flex items-end gap-2">
-                               <span>the sum of</span>
-                               <div className="flex-1"><InputCell id="amountWords" value={formData.draft.amountWords} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.amountWords} /></div>
-                            </div>
-                         </div>
-                         <div className="flex mt-12 gap-8">
-                            <div className="w-1/2 space-y-2 text-sm">
-                               <div className="flex gap-2">Drawn under: <InputCell id="bank" value={formData.draft.bank} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.bank} /></div>
-                               <div className="flex gap-2">L/C No.: <InputCell id="lc" value={formData.draft.lc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.lc} /></div>
-                               <div className="flex gap-2">Dated: <InputCell id="lcDate" value={formData.draft.lcDate} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.lcDate} /></div>
-                               <div className="mt-4 pt-2 border-t border-black">
-                                  <div className="mb-1">To:</div>
-                                  <div className="h-16"><InputCell id="drawee" isTextArea value={formData.draft.drawee} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.drawee} /></div>
-                               </div>
-                            </div>
-                            <div className="w-1/2 flex flex-col justify-end">
-                               <div className="border-b border-black mb-1 w-full"></div>
-                               <div className="text-right text-xs">(Signature)</div>
-                            </div>
-                         </div>
+                         {draftMode === 'draft1' ? (
+                            // Draft 1 Form
+                            <>
+                                <div className="absolute top-0 left-0 bg-black text-white px-2 py-1 text-xs">BILL OF EXCHANGE (练习 1)</div>
+                                <div className="flex justify-between mt-8 mb-8 gap-4">
+                                    <div className="w-1/3"><InputCell id="no" label="No." value={formData.draft1.no} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.no} /></div>
+                                    <div className="w-1/3"><InputCell id="place" label="Place & Date" value={formData.draft1.place} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.place} /></div>
+                                    <div className="w-1/3 border-2 border-dashed border-gray-300"><InputCell id="amountNum" label="Exchange for" value={formData.draft1.amountNum} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.amountNum} /></div>
+                                </div>
+                                <div className="space-y-6 text-lg">
+                                    <div className="flex items-end gap-2">
+                                        <span>At</span>
+                                        <div className="w-48"><InputCell id="tenor" value={formData.draft1.tenor} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.tenor} /></div>
+                                        <span className="text-sm">Sight of this First of Exchange (Second of Exchange being unpaid)</span>
+                                    </div>
+                                    <div className="flex items-end gap-2">
+                                        <span>Payable with interest @</span>
+                                        <div className="w-16 border-b border-black"><InputCell id="interest" className="border-none text-center" value={formData.draft1.interest} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.interest} /></div>
+                                        <span>% per annum</span>
+                                    </div>
+                                    <div className="flex items-end gap-2">
+                                        <span>Pay to the order of</span>
+                                        <div className="flex-1"><InputCell id="payee" value={formData.draft1.payee} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.payee} /></div>
+                                    </div>
+                                    <div className="flex items-end gap-2">
+                                        <span>the sum of</span>
+                                        <div className="flex-1"><InputCell id="amountWords" value={formData.draft1.amountWords} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.amountWords} /></div>
+                                    </div>
+                                </div>
+                                <div className="flex mt-12 gap-8">
+                                    <div className="w-1/2 space-y-2 text-sm">
+                                        <div className="flex gap-2">Drawn under: <InputCell id="bank" value={formData.draft1.bank} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.bank} /></div>
+                                        <div className="flex gap-2">L/C No.: <InputCell id="lc" value={formData.draft1.lc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.lc} /></div>
+                                        <div className="flex gap-2">Dated: <InputCell id="lcDate" value={formData.draft1.lcDate} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.lcDate} /></div>
+                                        <div className="mt-4 pt-2 border-t border-black">
+                                            <div className="mb-1">To:</div>
+                                            <div className="h-16"><InputCell id="drawee" isTextArea value={formData.draft1.drawee} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.drawee} /></div>
+                                        </div>
+                                    </div>
+                                    <div className="w-1/2 flex flex-col justify-end items-end">
+                                        <div className="w-full h-20 border-b border-black mb-1">
+                                           <InputCell id="drawer" label="Drawer" isTextArea className="border-none text-right flex items-end justify-end pb-0" value={formData.draft1.drawer} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft1.drawer} />
+                                        </div>
+                                        <div className="text-right text-xs">(Signature)</div>
+                                    </div>
+                                </div>
+                            </>
+                         ) : (
+                            // Draft 2 Form
+                            <>
+                                <div className="absolute top-0 left-0 bg-blue-800 text-white px-2 py-1 text-xs">BILL OF EXCHANGE (练习 2)</div>
+                                <div className="flex justify-between mt-8 mb-8 gap-4">
+                                    <div className="w-1/3"><InputCell id="no" label="No." value={formData.draft2.no} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.no} /></div>
+                                    <div className="w-1/3"><InputCell id="place" label="Place & Date" value={formData.draft2.place} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.place} /></div>
+                                    <div className="w-1/3 border-2 border-dashed border-gray-300"><InputCell id="amountNum" label="Exchange for" value={formData.draft2.amountNum} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.amountNum} /></div>
+                                </div>
+                                <div className="space-y-6 text-lg">
+                                    <div className="flex items-end gap-2">
+                                        <span>At</span>
+                                        <div className="w-48"><InputCell id="tenor" value={formData.draft2.tenor} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.tenor} /></div>
+                                        <span className="text-sm">Sight of this Second of Exchange (First of the same tenor and date being unpaid)</span>
+                                    </div>
+                                    <div className="flex items-end gap-2">
+                                        <span>Payable with interest @</span>
+                                        <div className="w-16 border-b border-black"><InputCell id="interest" className="border-none text-center" value={formData.draft2.interest} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.interest} /></div>
+                                        <span>% per annum</span>
+                                    </div>
+                                    <div className="flex items-end gap-2">
+                                        <span>Pay to the order of</span>
+                                        <div className="flex-1"><InputCell id="payee" value={formData.draft2.payee} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.payee} /></div>
+                                    </div>
+                                    <div className="flex items-end gap-2">
+                                        <span>the sum of</span>
+                                        <div className="flex-1"><InputCell id="amountWords" value={formData.draft2.amountWords} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.amountWords} /></div>
+                                    </div>
+                                </div>
+                                <div className="flex mt-12 gap-8">
+                                    <div className="w-1/2 space-y-2 text-sm">
+                                        <div className="flex gap-2">Drawn under: <InputCell id="bank" value={formData.draft2.bank} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.bank} /></div>
+                                        <div className="flex gap-2">L/C No.: <InputCell id="lc" value={formData.draft2.lc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.lc} /></div>
+                                        <div className="flex gap-2">Dated: <InputCell id="lcDate" value={formData.draft2.lcDate} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.lcDate} /></div>
+                                        <div className="mt-4 pt-2 border-t border-black">
+                                            <div className="mb-1">To:</div>
+                                            <div className="h-16"><InputCell id="drawee" isTextArea value={formData.draft2.drawee} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.drawee} /></div>
+                                        </div>
+                                    </div>
+                                    <div className="w-1/2 flex flex-col justify-end items-end">
+                                        <div className="w-full h-20 border-b border-black mb-1">
+                                           <InputCell id="drawer" label="Drawer" isTextArea className="border-none text-right flex items-end justify-end pb-0" value={formData.draft2.drawer} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft2.drawer} />
+                                        </div>
+                                        <div className="text-right text-xs">(Signature)</div>
+                                    </div>
+                                </div>
+                            </>
+                         )}
                       </div>
                     )}
 
