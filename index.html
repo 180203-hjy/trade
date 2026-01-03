@@ -131,15 +131,15 @@
               className={`
                 relative inline-block cursor-pointer mx-1 px-1 rounded transition-all duration-200 border-b-2 align-bottom
                 ${isSelected 
-                  ? 'bg-blue-600 text-white border-blue-800 scale-105 shadow-md z-10' 
+                  ? 'bg-blue-700 text-white border-blue-900 scale-105 shadow-md z-10' 
                   : isUsed 
-                    ? 'bg-gray-200 text-gray-400 border-gray-300 line-through decoration-gray-400' 
-                    : 'bg-yellow-50 text-blue-900 border-blue-200 hover:bg-yellow-200 hover:border-blue-500'
+                    ? 'bg-gray-100 text-gray-400 border-gray-300 line-through decoration-gray-400' 
+                    : 'bg-blue-50 text-blue-900 border-blue-200 hover:bg-blue-100 hover:border-blue-400'
                 }
               `}
               title={isUsed ? "已使用" : "点击选中"}
             >
-              <span className={`text-[9px] font-bold mr-1 opacity-60 select-none px-0.5 rounded ${isUsed ? 'text-gray-500' : 'text-black bg-white/50'}`}>
+              <span className={`text-[9px] font-bold mr-1 opacity-70 select-none px-0.5 rounded ${isUsed ? 'text-gray-500' : 'text-blue-900 bg-white/60'}`}>
                 {label}
               </span>
               {text}
@@ -386,14 +386,14 @@
           const isCorrect = isChecked && normalize(val) === normalize(correctValue);
           const isWrong = isChecked && !isCorrect;
 
-          let borderStyle = 'border-gray-400 hover:border-blue-300';
-          let bgStyle = 'bg-transparent';
+          let borderStyle = 'border-gray-300 hover:border-blue-400';
+          let bgStyle = 'bg-white';
           let ringStyle = '';
 
           if (isActive) {
-            borderStyle = 'border-yellow-500';
-            bgStyle = 'bg-yellow-200';
-            ringStyle = 'ring-2 ring-yellow-300 shadow-inner z-10';
+            borderStyle = 'border-blue-500';
+            bgStyle = 'bg-blue-50';
+            ringStyle = 'ring-2 ring-blue-200 shadow-inner z-10';
           } else if (isChecked) {
             if (isCorrect) {
               borderStyle = 'border-green-500';
@@ -514,7 +514,7 @@
                 <div className="flex items-center gap-4">
                    <div className="flex items-center gap-3 bg-blue-50 px-4 py-2 rounded-lg border border-blue-100 text-xs text-blue-800">
                       <span className="font-bold">模式：</span>
-                      点击左侧 <span className="bg-yellow-200 px-1 rounded border border-blue-400">① 选项</span> &rarr; 点击右侧空格
+                      点击左侧 <span className="bg-blue-100 px-1 rounded border border-blue-300">① 选项</span> &rarr; 点击右侧空格
                    </div>
                    <button 
                      onClick={checkAnswers}
@@ -544,8 +544,8 @@
                     onClick={() => setActiveTab(tab.id)}
                     className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                       activeTab === tab.id 
-                        ? 'bg-gray-100 text-blue-700 border border-b-0 border-gray-200 font-bold' 
-                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                        ? 'bg-blue-600 text-white border-blue-600 font-bold shadow-sm' 
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800 border-transparent'
                     }`}
                   >
                     {tab.label}
@@ -567,11 +567,7 @@
                     {activeTab === 'insurance' && <SourceInsurance onSelect={handleSourceSelect} currentSelection={currentSelection} usedIds={usedSourceIds.insurance} />}
                     {activeTab === 'draft' && <SourceDraft onSelect={handleSourceSelect} currentSelection={currentSelection} usedIds={usedSourceIds.draft} />}
                     
-                    {currentSelection && (
-                      <div className="fixed bottom-4 left-4 bg-gray-800 text-white px-4 py-2 rounded shadow-lg text-sm max-w-sm truncate z-50 border-2 border-green-400">
-                        已选中: <span className="font-mono text-green-300">{currentSelection.text}</span>
-                      </div>
-                    )}
+                    {/* 移除了左下角浮窗 */}
                   </div>
                 </div>
 
@@ -581,7 +577,7 @@
                     
                     {/* Invoice Form */}
                     {activeTab === 'invoice' && (
-                      <div className="flex flex-col h-full gap-4">
+                      <div className="flex flex-col gap-4">
                         <div className="text-center font-bold text-2xl border-b-2 border-black pb-2">COMMERCIAL INVOICE</div>
                         <div className="grid grid-cols-2 gap-4">
                            <div className="space-y-4">
@@ -599,20 +595,20 @@
                             <InputCell id="transport" label="Transport Details" value={formData.invoice.transport} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.transport} />
                             <InputCell id="payment" label="Terms of Payment" value={formData.invoice.payment} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.payment} />
                         </div>
-                        <div className="flex-1 border border-black min-h-[400px] flex flex-col">
+                        <div className="flex-1 border border-black min-h-[180px] flex flex-col">
                            <div className="flex border-b border-black font-bold text-center bg-gray-50">
-                              <div className="w-[20%] p-1 border-r border-black">Marks</div>
-                              <div className="w-[40%] p-1 border-r border-black">Description</div>
-                              <div className="w-[15%] p-1 border-r border-black">Quantity</div>
-                              <div className="w-[15%] p-1 border-r border-black">Unit Price</div>
-                              <div className="w-[10%] p-1">Amount</div>
+                              <div className="w-[18%] p-1 border-r border-black">Marks</div>
+                              <div className="w-[42%] p-1 border-r border-black">Description</div>
+                              <div className="w-[12%] p-1 border-r border-black">Quantity</div>
+                              <div className="w-[13%] p-1 border-r border-black">Unit Price</div>
+                              <div className="w-[15%] p-1">Amount</div>
                            </div>
                            <div className="flex flex-1">
-                              <div className="w-[20%] p-1 border-r border-black"><InputCell id="marks" isTextArea className="border-none" value={formData.invoice.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.marks} /></div>
-                              <div className="w-[40%] p-1 border-r border-black"><InputCell id="desc" isTextArea className="border-none" value={formData.invoice.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.desc} /></div>
-                              <div className="w-[15%] p-1 border-r border-black"><InputCell id="qty" isTextArea className="border-none" value={formData.invoice.qty} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.qty} /></div>
-                              <div className="w-[15%] p-1 border-r border-black"><InputCell id="price" isTextArea className="border-none" value={formData.invoice.price} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.price} /></div>
-                              <div className="w-[10%] p-1"><InputCell id="amount" isTextArea className="border-none" value={formData.invoice.amount} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.amount} /></div>
+                              <div className="w-[18%] p-1 border-r border-black"><InputCell id="marks" isTextArea className="border-none" value={formData.invoice.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.marks} /></div>
+                              <div className="w-[42%] p-1 border-r border-black"><InputCell id="desc" isTextArea className="border-none" value={formData.invoice.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.desc} /></div>
+                              <div className="w-[12%] p-1 border-r border-black"><InputCell id="qty" isTextArea className="border-none" value={formData.invoice.qty} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.qty} /></div>
+                              <div className="w-[13%] p-1 border-r border-black"><InputCell id="price" isTextArea className="border-none" value={formData.invoice.price} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.price} /></div>
+                              <div className="w-[15%] p-1"><InputCell id="amount" isTextArea className="border-none" value={formData.invoice.amount} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.invoice.amount} /></div>
                            </div>
                            <div className="border-t border-black p-2 flex justify-end items-center gap-2">
                               <span className="font-bold">Total:</span>
@@ -628,7 +624,7 @@
 
                     {/* B/L Form */}
                     {activeTab === 'bl' && (
-                      <div className="flex flex-col h-full border border-black text-xs font-serif">
+                      <div className="flex flex-col border border-black text-xs font-serif">
                          <div className="grid grid-cols-2 h-40 border-b border-black">
                             <div className="border-r border-black p-1"><InputCell id="shipper" label="Shipper" isTextArea className="border-none" value={formData.bl.shipper} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.shipper} /></div>
                             <div className="flex flex-col">
@@ -654,18 +650,18 @@
                             <div className="p-1"><InputCell id="final" label="Final Destination" value={formData.bl.final} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.final} /></div>
                          </div>
                          <div className="flex border-b border-black text-center font-bold bg-gray-50">
-                            <div className="w-1/4 p-1 border-r border-black">Marks</div>
-                            <div className="w-1/6 p-1 border-r border-black">Pkgs</div>
-                            <div className="w-1/3 p-1 border-r border-black">Description</div>
-                            <div className="w-1/6 p-1 border-r border-black">Weight</div>
-                            <div className="w-1/6 p-1">Meas.</div>
+                            <div className="w-[20%] p-1 border-r border-black">Marks</div>
+                            <div className="w-[10%] p-1 border-r border-black">Pkgs</div>
+                            <div className="w-[45%] p-1 border-r border-black">Description</div>
+                            <div className="w-[12%] p-1 border-r border-black">Weight</div>
+                            <div className="w-[13%] p-1">Meas.</div>
                          </div>
-                         <div className="flex flex-1 min-h-[300px]">
-                            <div className="w-1/4 p-1 border-r border-black"><InputCell id="marks" isTextArea className="border-none" value={formData.bl.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.marks} /></div>
-                            <div className="w-1/6 p-1 border-r border-black"><InputCell id="pkgs" isTextArea className="border-none" value={formData.bl.pkgs} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.pkgs} /></div>
-                            <div className="w-1/3 p-1 border-r border-black"><InputCell id="desc" isTextArea className="border-none" value={formData.bl.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.desc} /></div>
-                            <div className="w-1/6 p-1 border-r border-black"><InputCell id="weight" isTextArea className="border-none" value={formData.bl.weight} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.weight} /></div>
-                            <div className="w-1/6 p-1"><InputCell id="meas" isTextArea className="border-none" value={formData.bl.meas} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.meas} /></div>
+                         <div className="flex flex-1 min-h-[180px]">
+                            <div className="w-[20%] p-1 border-r border-black"><InputCell id="marks" isTextArea className="border-none" value={formData.bl.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.marks} /></div>
+                            <div className="w-[10%] p-1 border-r border-black"><InputCell id="pkgs" isTextArea className="border-none" value={formData.bl.pkgs} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.pkgs} /></div>
+                            <div className="w-[45%] p-1 border-r border-black"><InputCell id="desc" isTextArea className="border-none" value={formData.bl.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.desc} /></div>
+                            <div className="w-[12%] p-1 border-r border-black"><InputCell id="weight" isTextArea className="border-none" value={formData.bl.weight} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.weight} /></div>
+                            <div className="w-[13%] p-1"><InputCell id="meas" isTextArea className="border-none" value={formData.bl.meas} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.meas} /></div>
                          </div>
                          <div className="grid grid-cols-2 h-32 border-t border-black">
                             <div className="border-r border-black p-1"><InputCell id="freight" label="Freight & Charges" isTextArea className="border-none" value={formData.bl.freight} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.bl.freight} /></div>
@@ -679,7 +675,7 @@
 
                     {/* Insurance Form */}
                     {activeTab === 'insurance' && (
-                       <div className="flex flex-col h-full font-serif">
+                       <div className="flex flex-col font-serif">
                           <div className="text-center mb-6">
                              <h2 className="text-xl font-bold">THE PEOPLE'S INSURANCE COMPANY OF CHINA</h2>
                              <h1 className="text-4xl font-bold my-2">INSURANCE POLICY</h1>
@@ -698,10 +694,10 @@
                              </div>
                              <p className="text-xs text-justify">undertakes to insure the undermentioned goods...</p>
                           </div>
-                          <div className="border border-black mx-4 flex flex-1 min-h-[300px]">
-                             <div className="w-[20%] border-r border-black p-1"><InputCell id="marks" label="Marks" isTextArea className="border-none" value={formData.insurance.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.marks} /></div>
-                             <div className="w-[15%] border-r border-black p-1"><InputCell id="qty" label="Quantity" isTextArea className="border-none" value={formData.insurance.qty} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.qty} /></div>
-                             <div className="w-[45%] border-r border-black p-1"><InputCell id="desc" label="Description" isTextArea className="border-none" value={formData.insurance.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.desc} /></div>
+                          <div className="border border-black mx-4 flex flex-1 min-h-[150px]">
+                             <div className="w-[18%] border-r border-black p-1"><InputCell id="marks" label="Marks" isTextArea className="border-none" value={formData.insurance.marks} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.marks} /></div>
+                             <div className="w-[12%] border-r border-black p-1"><InputCell id="qty" label="Quantity" isTextArea className="border-none" value={formData.insurance.qty} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.qty} /></div>
+                             <div className="w-[50%] border-r border-black p-1"><InputCell id="desc" label="Description" isTextArea className="border-none" value={formData.insurance.desc} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.desc} /></div>
                              <div className="w-[20%] p-1"><InputCell id="amount" label="Amount" isTextArea className="border-none" value={formData.insurance.amount} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.insurance.amount} /></div>
                           </div>
                           <div className="mx-4 mt-2 flex gap-2">
@@ -727,7 +723,7 @@
 
                     {/* Draft Form */}
                     {activeTab === 'draft' && (
-                      <div className="border border-black p-6 h-full relative">
+                      <div className="border border-black p-6 relative">
                          <div className="absolute top-0 left-0 bg-black text-white px-2 py-1 text-xs">BILL OF EXCHANGE</div>
                          <div className="flex justify-between mt-8 mb-8 gap-4">
                             <div className="w-1/3"><InputCell id="no" label="No." value={formData.draft.no} onChange={handleFieldChange} onFocus={handleFieldClick} isChecked={isChecked} correctValue={CORRECT_ANSWERS.draft.no} /></div>
